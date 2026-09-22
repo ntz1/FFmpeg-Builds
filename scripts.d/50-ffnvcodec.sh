@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT_REPO12="https://github.com/FFmpeg/nv-codec-headers.git"
+SCRIPT_COMMIT12="87f7b045326f596268b1ab12fdc5867962324e8d"
+SCRIPT_BRANCH12="sdk/12.0"
+
 SCRIPT_REPO="https://github.com/FFmpeg/nv-codec-headers.git"
 SCRIPT_COMMIT="eddcea9e27f6b772057c9b3f87de2cc1737faffc"
 
@@ -21,9 +25,11 @@ ffbuild_dockerdl() {
     default_dl ffnvcodec
     echo "git-mini-clone \"$SCRIPT_REPO2\" \"$SCRIPT_COMMIT2\" ffnvcodec2"
     echo "git-mini-clone \"$SCRIPT_REPO3\" \"$SCRIPT_COMMIT3\" ffnvcodec3"
+    echo "git-mini-clone \"$SCRIPT_REPO12\" \"$SCRIPT_COMMIT12\" ffnvcodec12"
 }
 
 ffbuild_dockerbuild() {
+    if false; then
     if (( $FFVER < 800 )); then
         cd ffnvcodec3
     elif (( $FFVER <= 801 )); then
@@ -31,6 +37,8 @@ ffbuild_dockerbuild() {
     else
         cd ffnvcodec
     fi
+    fi
+    cd ffnvcodec12
 
     make PREFIX="$FFBUILD_PREFIX" DESTDIR="$FFBUILD_DESTDIR" install
 }
